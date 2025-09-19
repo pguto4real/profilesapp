@@ -1,22 +1,18 @@
 
 
-# Amplify App
+
 resource "aws_amplify_app" "react_app" {
-  name       = "my-react-app"
-  repository = "https://github.com/pguto4real/profilesapp.git"
- oauth_token = var.github_token
- 
-  # Build spec for React app
-  build_spec = <<EOT
+ name        = var.app_name
+  repository  = var.github_repo
+  oauth_token = var.github_token
+
+build_spec = <<EOT
 version: 1
-backend:
-  phases:
-    build:
-      commands:
-        - npm ci --cache .npm --prefer-offline
-        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
 frontend:
   phases:
+    preBuild:
+      commands:
+        - npm install
     build:
       commands:
         - npm run build
@@ -26,16 +22,10 @@ frontend:
       - '**/*'
   cache:
     paths:
-      - .npm/**/*
+      - node_modules/**/*
 EOT
 }
-
-
-
-# Branch (main) with auto build enabled
 resource "aws_amplify_branch" "main" {
-  app_id            = aws_amplify_app.react_app.id
-  branch_name       = "main"       # must match your GitHub branch name
-  enable_auto_build = true         # 👈 ensures auto deploy
-  framework         = "React"      # helps Amplify detect framework
+  app_id      = aws_amplify_app.react_app.id
+  branch_name = "main" # The branch you want Amplify to auto-deploy
 }
