@@ -5,14 +5,7 @@ resource "aws_amplify_app" "react_app" {
   name       = "my-react-app"
   repository = "https://github.com/pguto4real/profilesapp.git"
  oauth_token = var.github_token
-  environment_variables = {
-    ENV = "dev"
-  }
-   auto_branch_creation_config {
-    enable_auto_build            = true
-    enable_pull_request_preview  = true
-    stage                        = "DEVELOPMENT"
-  }
+ 
   # Build spec for React app
   build_spec = <<EOT
 version: 1
