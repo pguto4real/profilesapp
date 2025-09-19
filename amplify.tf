@@ -9,21 +9,24 @@ resource "aws_amplify_app" "react_app" {
   # Build spec for React app
   build_spec = <<EOT
 version: 1
+backend:
+  phases:
+    build:
+      commands:
+        - npm ci --cache .npm --prefer-offline
+        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
 frontend:
   phases:
-    preBuild:
-      commands:
-        - npm ci
     build:
       commands:
         - npm run build
   artifacts:
-    baseDirectory: build
+    baseDirectory: dist
     files:
       - '**/*'
   cache:
     paths:
-      - node_modules/**/*
+      - .npm/**/*
 EOT
 }
 
