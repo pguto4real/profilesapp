@@ -8,8 +8,11 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+.terraform/
 dist
 dist-ssr
+terraform.tfstate
+terraform.tfstate.backup
 *.local
 
 # Editor directories and files
