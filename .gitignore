@@ -9,8 +9,10 @@ lerna-debug.log*
 
 node_modules
 .terraform/
+amplify/
 dist
 dist-ssr
+terraform.tfvars
 terraform.tfstate
 terraform.tfstate.backup
 *.local
@@ -26,3 +28,9 @@ terraform.tfstate.backup
 *.sln
 *.sw?
 .terraform.lock.hcl
+
+# amplify
+node_modules
+.amplify
+amplify_outputs*
+amplifyconfiguration*
